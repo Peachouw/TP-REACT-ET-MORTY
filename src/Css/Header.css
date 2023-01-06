@@ -1,0 +1,33 @@
+#header{
+    width: 100%;
+    height: 75px;
+    background-color: aliceblue;
+}
+
+#img_header{
+    position: absolute;
+    height: 4rem;
+    width: auto;
+    left: 0.5%;
+}
+#div_titre_site{
+    position: relative;
+    top: 1.5rem;
+    width: 30%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#span_titre{
+    font-size: 1.3rem;
+}
+
+.lien{
+    font-style: italic;
+    margin : 0 1rem;
+}
+
+#div_liens{
+    position: absolute;
+    right: 1rem;
+}
