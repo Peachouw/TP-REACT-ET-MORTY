@@ -17,7 +17,7 @@ export default function CartePersonnage(props) {
             : tabCookie.push(props.data.id);
 
         console.log(tabCookie);
-        setCookie("fav", tabCookie);
+        setCookie("fav", tabCookie, {path: '/'});
         setIsLiked(!isLiked);
     }
 
