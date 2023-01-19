@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
-import "../Css/Dashboard.css";
-import { auth, db, logout } from "../firebase/firebase";
+import "../../Css/Dashboard.css";
+import { auth, db, logout } from "../../firebase/firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
 function Dashboard() {
   const [user, loading, error] = useAuthState(auth);
@@ -11,9 +11,7 @@ function Dashboard() {
   const fetchUserName = async () => {
     try {
       const q = query(collection(db, "users"), where("uid", "==", user?.uid));
-      console.log(q);
       const doc = await getDocs(q);
-      console.log(doc);
       const data = doc.docs[0].data();
       console.log(data);
       setName(data.name);

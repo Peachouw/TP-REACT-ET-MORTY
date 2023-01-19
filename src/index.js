@@ -1,14 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Dashboard from "./Components/Dashboard";
+import Dashboard from "./Components/LoginComponent/Dashboard";
 import Episode from "./Components/Episode";
-import Login from "./Components/LoginPage";
+import Login from "./Components/LoginComponent/LoginPage";
 import PageAccueil from "./Components/PageAccueil";
 import PageEpisode from "./Components/PageEpisode";
 import PageFavori from "./Components/PageFavori";
 import PagePersonnage from "./Components/PagePersonnage";
-import Register from "./Components/Register";
+import Register from "./Components/LoginComponent/Register";
 import "./index.css";
 
 const router = createBrowserRouter([

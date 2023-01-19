@@ -5,8 +5,12 @@ import {
   auth,
   registerWithEmailAndPassword,
   signInWithGoogle,
-} from "../firebase/firebase";
-import "../Css/Register.css";
+} from "../../firebase/firebase";
+import "../../Css/Register.css";
+import Header from "../Header";
+
+
+
 function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,6 +26,8 @@ function Register() {
     if (user) navigate("/dashboard");
   }, [user, loading]);
   return (
+    <>
+    <Header/>
     <div className="register">
       <div className="register__container">
         <input
@@ -59,6 +65,7 @@ function Register() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 export default Register;

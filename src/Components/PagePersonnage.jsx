@@ -53,7 +53,7 @@ export default function PagePersonnage() {
             : tabCookie.push(char.id);
 
         console.log(tabCookie);
-        setCookie("fav", tabCookie);
+        setCookie("fav", tabCookie, {path: '/'});
         setIsLiked(!isLiked);
     }
 
