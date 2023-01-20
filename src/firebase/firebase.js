@@ -9,7 +9,7 @@ import {
     signOut,
 } from "firebase/auth";
 import { getFirestore, query, getDocs, collection, where, setDoc, addDoc } from "firebase/firestore";
-
+  
 const firebaseConfig = {
     apiKey: "AIzaSyCgepHuCjTJCyqu5nPU10FbT6o8cjpgw4I",
     authDomain: "tp-rick-et-morty.firebaseapp.com",
