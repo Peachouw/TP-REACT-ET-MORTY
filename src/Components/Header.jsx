@@ -1,6 +1,9 @@
 import "../Css/Header.css";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectOnlineUser } from "../Store/OnlineUserReducer";
 export default function Header() {
+    const userOnline = useSelector(selectOnlineUser)
     return (
         <nav className="bg-gray-900 border-gray-200 px-2 sm:px-4 py-2.5 rounded">
             <div className="container flex flex-wrap items-center justify-between mx-auto">
@@ -53,16 +56,17 @@ export default function Header() {
                                 </Link>
                             </a>
                         </li>
+                        {userOnline.uid != 0 &&
                         <li>
                             <a
                                 href="#"
                                 className="block py-2 pl-3 pr-4  rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 text-gray-400 md:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                             >
-                                <Link to="/fav/" relative="path">
+                                <Link to="/fav/" relative="path" >
                                     Favoris
                                 </Link>
                             </a>
-                        </li>
+                        </li>}
                         <li>
                             <a
                                 href="#"

@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
+import { useSelector } from "react-redux";
+import { selectOnlineUser } from "../Store/OnlineUserReducer";
 import CartePersonnage from "./CartePersonnage";
 import Header from "./Header";
 
@@ -8,7 +10,8 @@ export default function PageAccueil() {
     const [loaded, setLoaded] = useState(false);
     const [cookie, setCookie, removeCookie] = useCookies(["fav"]);
     const listPerso = [];
-
+    const onlineUser = useSelector(selectOnlineUser)
+    console.log(onlineUser);
     useEffect(() => {
         var nbFavCookie = 0;
         if (cookie.fav != undefined && cookie.fav.length > 0) {
@@ -55,6 +58,11 @@ export default function PageAccueil() {
     return (
         <>
             <Header />
+            
+            <div style={{ textAlign: "center", width: 300, margin: "0 auto" }}>
+                <h1 className="text-3xl mt-5 font-normal leading-normal text-slate-800">
+                {onlineUser.userName ? <h1>Hello {onlineUser.userName}</h1> : <h1>Hello inconnu</h1>}                </h1>
+            </div>
             <div className="flex flex-rows flex-wrap justify-around">
                 {loaded && listPerso}
             </div>
