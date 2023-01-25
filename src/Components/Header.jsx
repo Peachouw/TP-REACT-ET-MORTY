@@ -56,7 +56,7 @@ export default function Header() {
                                 </Link>
                             </a>
                         </li>
-                        {userOnline.uid != 0 &&
+                        {userOnline.userId != 0 &&
                         <li>
                             <a
                                 href="#"
@@ -73,17 +73,7 @@ export default function Header() {
                                 className="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 text-gray-400 md:hover:text-white hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                             >
                                 <Link to="/login" relative="path">
-                                    Connection
-                                </Link>
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="#"
-                                className="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 text-gray-400 md:hover:text-white hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                            >
-                                <Link to="/register" relative="path">
-                                    Inscription
+                                    {userOnline.userId == 0 ? "Connection / Inscription" : "Déconnection"}
                                 </Link>
                             </a>
                         </li>

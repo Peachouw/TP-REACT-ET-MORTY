@@ -21,7 +21,6 @@ export const onlineUserSlice = createSlice({
         unlogUser: (state) => {
             state.value = { userId: 0, userName: "", userEmail: "", userAuth: "" };
         },
-
     },
 });
 
