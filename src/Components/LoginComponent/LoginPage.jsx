@@ -17,38 +17,45 @@ function Login() {
     }
     if (user) navigate("/dashboard");
   }, [user, loading]);
+
   return (<>
     <Header/>
-    <div className="login">
-      <div className="login__container">
+    <div className="img_rick">
+                <img src="/img/rick.png" className="mr-3" alt="Flowbite Logo" />
+            </div>
+            <div className="img_morty">
+                <img src="/img/morty.png" className="mr-3" alt="Flowbite Logo" />
+            </div>
+    <div className="login mt-32">
+      <div className="login__container rounded-xl ">
         <input
           type="text"
           className="login__textBox"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="E-mail Address"
+          placeholder="Adresse email"
         />
         <input
           type="password"
           className="login__textBox"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
+          placeholder="Mot de passe"
         />
         <button
-          className="login__btn"
+          className="login__btn bg-slate-800 rounded-lg"
           onClick={() => logInWithEmailAndPassword(email, password)}
         >
-          Login
+          Connexion
         </button>
-        <button className="login__btn login__google" onClick={signInWithGoogle}>
-          Login with Google
+        <button className="login__btn login__google  rounded-lg" onClick={signInWithGoogle}>
+          Connexion avec Google
         </button>
         <div>
-          <Link to="/reset">Forgot Password</Link>
+          {/* <Link to="/reset">Mot de passe oublié ?</Link> */}
         </div>
         <div>
-          Don't have an account? <Link to="/register">Register</Link> now.
+          Pas encore de compte ? <Link to="/register"><span className="underline">Inscription ici.</span></Link>
         </div>
       </div>
     </div>

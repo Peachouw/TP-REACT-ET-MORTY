@@ -1,9 +1,11 @@
+import { getAuth } from "firebase/auth";
 import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { useSelector } from "react-redux";
-import { db } from "../firebase/firebase";
-import { selectOnlineUser } from "../Store/OnlineUserReducer";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { auth, db } from "../firebase/firebase";
+import { selectOnlineUser, setUserAuth, setUserEmail, setUserId, setUserName, unlogUser } from "../Store/OnlineUserReducer";
 import CartePersonnage from "./CartePersonnage";
 import Header from "./Header";
 
@@ -13,7 +15,31 @@ export default function PageAccueil() {
     const [cookie, setCookie, removeCookie] = useCookies(["fav"]);
     const listPerso = [];
     const user = useSelector(selectOnlineUser);
-    console.log(user);
+    const [userOnline, loading, error] = useAuthState(auth);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (loading) return;
+        if (!user) {
+            dispatch(unlogUser());
+            // return navigate("/login");
+        }
+        fetchUserName();
+    }, [user, loading]);
+
+
+    const fetchUserName = async () => {
+        const q = query(collection(db, "users"), where("uid", "==", userOnline.uid));
+        const doc = await getDocs(q);
+        const data = doc.docs[0].data();
+        console.log(data);
+        dispatch(setUserName(data.name));
+        dispatch(setUserEmail(data.email));
+        dispatch(setUserAuth(data.authProvider));
+        dispatch(setUserId(data.uid));
+        console.log(userOnline);
+    };
+
     useEffect(() => {
         async function t() {
             if (user.userId != 0) {

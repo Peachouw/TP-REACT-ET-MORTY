@@ -1,9 +1,10 @@
 .register {
-    height: 100vh;
+    /* height: 100vh; */
     width: 100vw;
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 300;
   }
   .register__container {
     display: flex;
@@ -11,6 +12,8 @@
     text-align: center;
     background-color: #dcdcdc;
     padding: 30px;
+    width: 50%;
+    max-width: 500px;
   }
   .register__textBox {
     padding: 10px;
@@ -23,11 +26,33 @@
     margin-bottom: 10px;
     border: none;
     color: white;
-    background-color: black;
+    /* background-color: black; */
   }
   .register__google {
     background-color: #4285f4;
   }
   .register div {
     margin-top: 7px;
+  }
+
+  input{
+    border-radius: 5px;
+  }
+
+  .img_rick{
+    position: absolute;
+    right: 0;
+    top: 100px;
+    transform: translate(40%);
+    height: 30%;
+    z-index: -5;
+  }
+
+  .img_morty{
+    position: absolute;
+    left: 0;
+    top: 100px;
+    transform: translate(-30%);
+    height: 30%;
+    z-index: -5;
   }
