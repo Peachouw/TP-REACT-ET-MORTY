@@ -4,8 +4,8 @@ import { useState } from "react";
 import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";
 import { collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
-import { useSelector } from "react-redux";
-import { selectOnlineUser } from "../Store/OnlineUserReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { selectOnlineUser, setUserFavs } from "../Store/OnlineUserReducer";
 import { db } from "../firebase/firebase";
 import { useEffect } from "react";
 
@@ -13,7 +13,8 @@ export default function CartePersonnage(props) {
     const [cookie, setCookie, removeCookie] = useCookies(["fav"]);
     const [isLiked, setIsLiked] = useState(cookie.fav != undefined ? cookie.fav.includes(props.data.id) : false);
     const user = useSelector(selectOnlineUser);
-    console.log(user)
+    const dispatch = useDispatch()
+
     useEffect(()=>{
         async function t() {
             const q = query(collection(db, "users"), where("uid", "==", user.userId));
@@ -24,7 +25,7 @@ export default function CartePersonnage(props) {
             cookieDocs = doc(db, "users", cookieDocs.id);
             const t = await getDoc(cookieDocs);
             var tabFavs = t.data().favs;
-            console.log(tabFavs);
+
             return tabFavs;
         }
         var ta = t().then((response) => {
@@ -47,7 +48,7 @@ export default function CartePersonnage(props) {
             tabFavs.includes(props.data.id) ? tabFavs.splice(tabFavs.indexOf(props.data.id), 1) : tabFavs.push(props.data.id);
         }
         console.log(tabFavs);
-
+        dispatch(setUserFavs(tabFavs))
         await updateDoc(cookieDocs, {
             favs: tabFavs,
         });

@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const onlineUserSlice = createSlice({
     name: "onlineUser",
     initialState: {
-        value: { userId: 0, userName: "", userEmail: "", userAuth: "" },
+        value: { userId: 0, userName: "", userEmail: "", userAuth: "", userFavs :[] },
     },
     reducers: {
         setUserId: (state, action) => {
@@ -18,6 +18,9 @@ export const onlineUserSlice = createSlice({
         setUserAuth: (state, action) => {
             state.value.userAuth = action.payload;
         },
+        setUserFavs:(state,action)=>{
+            state.value.userFavs = action.payload;
+        },
         unlogUser: (state) => {
             state.value = { userId: 0, userName: "", userEmail: "", userAuth: "" };
         },
@@ -25,7 +28,7 @@ export const onlineUserSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setUserAuth, setUserEmail, setUserId, setUserName, unlogUser } = onlineUserSlice.actions;
+export const { setUserAuth, setUserEmail, setUserId, setUserName, unlogUser, setUserFavs } = onlineUserSlice.actions;
 
 export const selectOnlineUser = (state) => state.onlineUser.value
 

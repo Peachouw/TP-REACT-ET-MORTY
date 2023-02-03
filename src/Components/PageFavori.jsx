@@ -5,31 +5,36 @@ import Header from "./Header";
 import { Link, useNavigate } from "react-router-dom";
 import { collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import { db } from "../firebase/firebase";
-import { useSelector } from "react-redux";
-import { selectOnlineUser } from "../Store/OnlineUserReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { selectOnlineUser, setUserFavs } from "../Store/OnlineUserReducer";
 
+
+var tabFav;
 export default function PageFavori() {
     const [char, setChar] = useState([]);
     const [loaded, setLoaded] = useState(false);
-    const [cookie, setCookie, removeCookie] = useCookies(["fav"]);
     const listPerso = [];
     const user = useSelector(selectOnlineUser);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    async function t() {
+        const q = query(collection(db, "users"), where("uid", "==", user.userId));
+
+        var cookieDocs = await getDocs(q);
+        cookieDocs = cookieDocs.docs[0];
+
+        cookieDocs = doc(db, "users", cookieDocs.id);
+        const t = await getDoc(cookieDocs);
+        var tabFavs = t.data().favs;
+        console.log(tabFavs);
+        return tabFavs;
+    }
 
     useEffect(() => {
-        if(user.userId == 0) navigate('/')
-        async function t() {
-            const q = query(collection(db, "users"), where("uid", "==", user.userId));
+        console.log(user.userFavs);
 
-            var cookieDocs = await getDocs(q);
-            cookieDocs = cookieDocs.docs[0];
-
-            cookieDocs = doc(db, "users", cookieDocs.id);
-            const t = await getDoc(cookieDocs);
-            var tabFavs = t.data().favs;
-            console.log(tabFavs);
-            return tabFavs;
-        }
+        if (user.userId == 0) navigate("/");
         var ta = t().then((response) => {
             console.log(response);
             var nbFavCookie = 0;
@@ -51,18 +56,14 @@ export default function PageFavori() {
                 .then((data) => {
                     console.log(data);
                     setChar(data);
+                    setLoaded(true);
+                    tabFav=user.userFavs
+                    console.log(tabFav);
                 });
-            setLoaded(true);
-            console.log(listPerso);
         });
-    }, []);
+    }, [user.userFavs]);
 
-    if (loaded) {
-        for (let index = 0; index < char.length; index++) {
-            listPerso.push(<CartePersonnage key={index} data={char[index]} />);
-        }
-    }
-
+    console.log(char);
     return (
         <>
             <Header />
@@ -70,8 +71,11 @@ export default function PageFavori() {
                 <h1 className="text-3xl mt-5 underline font-normal leading-normal text-slate-800">Page Favori</h1>
             </div>
             <div className="flex flex-rows flex-wrap justify-around">
-                {loaded && listPerso}
-                {listPerso.length === 0 && (
+                {loaded && char.length>0 &&
+                    char.map((value, index) => {
+                        return <CartePersonnage key={index} data={value} />;
+                    })}
+                {char.info != undefined && (
                     <h1 className="mt-10 text-2xl">
                         Aucun personnage en favori, rendez vous sur la page épisode :{" "}
                         <Link to={"/episodes/1"} relative="path">

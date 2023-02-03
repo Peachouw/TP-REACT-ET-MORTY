@@ -15,7 +15,7 @@ function Register() {
     const [errorEmail, setErrorEmail] = useState("");
 
     const register = () => {
-        testRegister(name, email, password);
+        if (testRegister(name, email, password)) registerWithEmailAndPassword(name, email, password);
     };
 
     useEffect(() => {
@@ -52,13 +52,7 @@ function Register() {
             </div>
             <div className="img_morty">
                 <img src="/img/morty.png" className="mr-3" alt="Flowbite Logo" />
-            </div>
-
-            {/* <img
-                            src="/img/rick-header.png"
-                            className="h-6 mr-3 sm:h-9"
-                            alt="Flowbite Logo"
-                        /> */}
+            </div>  
             <div className="register mt-20">
                 <div className="register__container rounded-xl">
                     <input type="text" className="register__textBox" value={name} onChange={(e) => setName(e.target.value)} placeholder="Nom" />
@@ -76,10 +70,10 @@ function Register() {
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Mot de passe"
                     />
-                    <button className="register__btn rounded-lg bg-slate-800" onClick={register}>
+                    <button className="register__btn rounded-lg bg-slate-800 " onClick={register}>
                         Inscription
                     </button>
-                    <button className="register__btn register__google rounded-lg bg-blue-600" onClick={signInWithGoogle}>
+                    <button className="register__btn register__google rounded-lg bg-blue-600" onClick={signInWithGoogle} >
                         Inscription avec Google
                     </button>
                     <div>
@@ -97,11 +91,24 @@ function Register() {
 }
 export default Register;
 
-export function testRegister(name, email, password){
-    if (!name) {alert("Please enter name");return false}
-    else {
-        if (name == "" && password == "") {registerWithEmailAndPassword(name, email, password);return true;}
-        else {
+export function testRegister(name, email, password) {
+    if (!name) {
+        console.log("Please enter name");
+        return false;
+    } else if (!email) {
+        return false;
+    } else if (!password) {
+        return false;
+    } else {
+        if (
+            name.length >= 1 &&
+            password.length > 7 &&
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+                email
+            )
+        ) {
+            return true;
+        } else {
             console.log("PAS BON !");
             return false;
         }
