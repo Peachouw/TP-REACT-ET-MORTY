@@ -10,33 +10,25 @@ export default function CarteEpisode(props) {
     const page = useParams();
 
     useEffect(() => {
-        {
-            props.data.characters.map((chara, i) => {
-                fetch(chara)
-                    .then((response) => {
-                        return response.json();
-                    })
-                    .then((data) => {
-                        // console.log(data);
-                        char.push(data);
+        props.data.characters.map((chara, i) => {
+            fetch(chara)
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    // console.log(data);
+                    char.push(data);
 
-                        for (let index = 0; index < char.length; index++) {
-                            listPerso.push(
-                                <div
-                                    className="w-1/6 p-3"
-                                    style={{ transform: "scale(0.7)" }}
-                                >
-                                    <CartePersonnage
-                                        key={index}
-                                        data={char[index]}
-                                    />
-                                </div>
-                            );
-                        }
-                    });
-                setLoaded(true);
-            });
-        }
+                    for (let index = 0; index < char.length; index++) {
+                        listPerso.push(
+                            <div className="w-1/6 p-3" style={{ transform: "scale(0.7)" }}>
+                                <CartePersonnage key={index} data={char[index]} />
+                            </div>
+                        );
+                    }
+                });
+            setLoaded(true);
+        });
     }, [page]);
 
     if (loaded) {
@@ -55,23 +47,10 @@ export default function CarteEpisode(props) {
                 {props.data.episode} - {props.data.name}
             </h1>
             <h3 className="text-l  font-normal leading-normal mt-0 mb-2">Date de sortie : {props.data.air_date} </h3>
-            <button
-                className="bg-slate-900 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full"
-                onClick={() => setHidden(!hidden)}
-            >
-                {hidden
-                    ? "Afficher les personnages de l'épisode"
-                    : "Masquer les personnages de l'épisode"}
+            <button className="bg-slate-900 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full" onClick={() => setHidden(!hidden)}>
+                {hidden ? "Afficher les personnages de l'épisode" : "Masquer les personnages de l'épisode"}
             </button>
-            <div
-                className={
-                    hidden
-                        ? "hidden"
-                        : "flex flex-rows flex-wrap justify-around"
-                }
-            >
-                {loaded && listPerso}
-            </div>
+            <div className={hidden ? "hidden" : "flex flex-rows flex-wrap justify-around"}>{loaded && listPerso}</div>
         </div>
     );
 }
